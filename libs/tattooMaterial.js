@@ -32,6 +32,7 @@ TattooMaterial({
             transparent: true,
         },
         fragment: {
+            'uniform float opacity;': 'uniform float time;',
             '#include <clipping_planes_pars_fragment>': noise2 + aastep + fade,
         },
     })
