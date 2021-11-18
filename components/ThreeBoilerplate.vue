@@ -23,6 +23,7 @@ import {
 import { OrbitControls } from '~/libs/OrbitControls'
 import fragmentShader from '~/libs/shaders/fragment.glsl'
 import vertexShader from '~/libs/shaders/vertex.glsl'
+import { TattooMaterial } from '../libs/tattooMaterial'
 
 require('resize-observer-polyfill/dist/ResizeObserver.global')
 
@@ -44,8 +45,8 @@ export default {
         // prep scene
         this.scene = new Scene()
 
-        const light = new PointLight(0xffffff, 2)
-        light.position.set(0, 4, 3)
+        const light = new PointLight(0xffffff, 1)
+        light.position.set(0, 4, 10)
         this.scene.add(light)
 
         // prep camera
@@ -97,18 +98,20 @@ export default {
 
         const tattooTexture = new TextureLoader().load('/images/tattoo-sdf.png')
 
-        this.tattooMaterial = new ShaderMaterial({
-            uniforms: {
-                time: { value: 0.0 },
-                tattooMap: { value: tattooTexture },
-                bgDiffuse: { value: diffuseTexture },
-                bgNormals: { value: normalTexture },
-                bgSpecular: { value: specTexture },
-            },
-            transparent: true,
-            vertexShader,
-            fragmentShader,
-        })
+        // this.tattooMaterial = TattooMaterial({
+        //     uniforms: {
+        //         time: { value: 0.0 },
+        //         tattooMap: { value: tattooTexture },
+        //         bgDiffuse: { value: diffuseTexture },
+        //         bgNormals: { value: normalTexture },
+        //         bgSpecular: { value: specTexture },
+        //     },
+        //     transparent: true,
+        //     vertexShader,
+        //     fragmentShader,
+        // })
+
+        this.tattooMaterial = TattooMaterial()
 
         const tattooMesh = new Mesh(tattooGeometry, this.tattooMaterial)
         tattooMesh.scale.setScalar(0.5)
