@@ -6,27 +6,13 @@ import fade from './shaders/chunks/fade'
 
 export const TattooMaterial = () => {
     const tattooTexture = new TextureLoader().load('/images/tattoo-sdf.png')
+    const normalTexture = new TextureLoader().load('/images/skin-2-normals.png')
 
-    // import fragmentShader from './shaders/fragment.glsl'
-
-    /*
-TattooMaterial({
-            uniforms: {
-                time: { value: 0.0 },
-                tattooMap: { value: tattooTexture },
-                bgDiffuse: { value: diffuseTexture },
-                bgNormals: { value: normalTexture },
-                bgSpecular: { value: specTexture },
-            },
-            transparent: true,
-            vertexShader,
-            fragmentShader,
-        })
-        */
     const output = extendMaterial(MeshPhongMaterial, {
         uniforms: {
             time: 0.0,
             map: tattooTexture,
+            normalMap: normalTexture,
         },
         material: {
             transparent: true,
@@ -34,6 +20,12 @@ TattooMaterial({
         fragment: {
             'uniform float opacity;': 'uniform float time;',
             '#include <clipping_planes_pars_fragment>': noise2 + aastep + fade,
+            '#include <map_fragment>': `vec4 texColor = texture2D(map, vUv);
+            float dist = texColor.a;
+            float alpha = 0.;
+            alpha = selectInk(1, dist, vUv);
+            diffuseColor.rgb = texColor.rgb;
+            diffuseColor.a = alpha;`,
         },
     })
     return output

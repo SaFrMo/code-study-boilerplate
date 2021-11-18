@@ -1,6 +1,6 @@
 export default `float absorb(float sdf, vec2 uv, float scale, float falloff) {
     float distort = sdf + noise2(uv * scale) * falloff;
-    float strength = mix(0.35, 1.2, abs(sin(time / 150.)));
+    float strength = mix(0.35, 0.75, sin(time * 0.02)) * 0.5 + 0.5;
     return aastep(strength, distort);
   }
   

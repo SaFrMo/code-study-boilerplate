@@ -10,11 +10,11 @@
 // #pragma glslify: noise2 = require('glsl-noise/simplex/2d')
 // #pragma glslify: aastep = require('glsl-aastep')
 
-varying vec2 vUv;
+// varying vec2 vUv;
 // varying vec3 vViewPosition;
 
-uniform float time;
-uniform sampler2D tattooMap;
+// uniform float time;
+// uniform sampler2D tattooMap;
 // uniform sampler2D bgDiffuse;
 // uniform sampler2D bgNormals;
 // uniform sampler2D bgSpecular;
